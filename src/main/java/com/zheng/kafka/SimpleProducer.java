@@ -20,12 +20,13 @@ public class SimpleProducer {
         props.put("batch.size", 16384);
         props.put("linger.ms", 1);
         props.put("buffer.memory", 33554432);
+        props.put("partitioner.class", "com.zheng.kafka.MyPartitionar");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
         Producer<String, String> producer = new KafkaProducer<>(props);
         for(int i = 0; i < 100; i++)
-            producer.send(new ProducerRecord<>("topic1", Integer.toString(i), Integer.toString(i)));
+            producer.send(new ProducerRecord<>("partitiontest", Integer.toString(i), Integer.toString(i)));
 
         producer.close();
         System.out.println("producer消息生成完毕!");
